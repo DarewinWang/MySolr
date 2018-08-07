@@ -1,11 +1,13 @@
 package com.darwin.common.nlp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.ToAnalysis;
 
 import com.hankcs.hanlp.HanLP;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 public class Segmentor {
 	public static void main(String[] args) {
@@ -16,5 +18,14 @@ public class Segmentor {
 		String document = "Portable版的基本功能指的是，除CRF分词、依存句法分析外的全部功能。如果用户有自定义的需求， 可以使用hanlp.properties进行配置。"
 				+ "Portable版依然可以从hanlp.properties中获取配置信息， 这使得用户可以挂载自定义词典、挂载CRF模型、使用外部词典覆盖内置词典等等。";
 		System.out.println(HanLP.extractKeyword(document, 5));
+	}
+	
+	public static List<String> Seg2Strings(String content){
+		List<String> result = new ArrayList<String>();
+		List<Term> segs = ToAnalysis.parse(content).getTerms();
+		for(Term seg : segs){
+			result.add(seg.getName());
+		}
+		return result;
 	}
 }
